@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+* {
+  color: #ececec;
+  font-family: Roboto, "Open sans", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.history li {
+  list-style-type: none;
+  cursor: pointer;
+  padding: 2px 5px;
+  margin-bottom: 0.3px;
+  font-size: 14px;
+  border: solid 10px transparent;
+  position: relative;
+}
+
+.history li:hover {
+  background-color: rgba(180, 180, 180, 0.05);
+  border-radius: 10px;
+}
+.history li:hover .fa-trash {
+  opacity: 1;
+}
+.fa-trash:hover {
+  color: #f87171;
+}
+input {
+  box-shadow:
+    rgba(0, 0, 0, 0, 0.5) 0 54px 55px,
+    rgba(0, 0, 0, 0, 0.5) 0 -12px 30px,
+    rgba(0, 0, 0, 0, 0.5) 0 4px 6px,
+    rgba(0, 0, 0, 0, 0.5) 0 12px 3px,
+    rgba(0, 0, 0, 0, 0.5) 0 -3px 5px;
+}
+
+.userDiv {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 14px;
+}
+
+.gptDiv {
+  text-align: left;
+  font-size: 14px;
+  padding: 20px 0px;
+}
+
+.userMessage {
+  background-color: #323232;
+  padding: 10px 12px;
+  border-radius: 12px;
+  max-width: 700px;
+  width: fit-content;
+}
+
+.gptMessage {
+  padding: 10px 0;
+  max-width: 700px;
+}
+
+.hljs {
+  border-radius: 14px;
+}
+
+pre {
+  white-space: pre-wrap;
+}

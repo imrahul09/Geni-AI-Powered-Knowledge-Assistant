@@ -1,0 +1,146 @@
+import logo from "../assets/blacklogo.png";
+import { useContext, useEffect } from "react";
+import { MyContext } from "../context/MyContext";
+import { v1 as uuidv1 } from "uuid";
+import { useAuth } from "../context/AuthContext.jsx";
+
+function Sidebar() {
+  const {
+    allThreads,
+    setAllThreads,
+    currThreadId,
+    setNewChat,
+    setPrompt,
+    setReply,
+    setCurrThreadId,
+    setPrevChats,
+  } = useContext(MyContext);
+
+  const { token } = useAuth();
+
+  const getAllThread = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/thread", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const res = await response.json();
+      const filterData = res.map((thread) => ({
+        threadId: thread.threadId,
+        title: thread.title,
+      }));
+      setAllThreads(filterData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    if (token) {
+      getAllThread();
+    }
+  }, [currThreadId, token]);
+
+  // when you try to create a new chat
+  const createNewChat = () => {
+    setNewChat(true);
+    setPrompt("");
+    setReply(null);
+    setCurrThreadId(uuidv1());
+    setPrevChats([]);
+  };
+
+  //when you want to see prev chats so you click the previous thread
+  const changeThread = async (newThreadId) => {
+    setCurrThreadId(newThreadId);
+
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/thread/${newThreadId},`,
+        {
+          headers: {
+            Authorization: `Bearer ${token},`,
+          },
+        },
+      );
+      const res = await response.json();
+      setPrevChats(res);
+      setNewChat(false);
+      setReply(null);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteThread = async (threadId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/thread/${threadId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const res = await response.json();
+      console.log(res);
+
+      //updated threads re-render
+      setAllThreads((prev) =>
+        prev.filter((thread) => thread.threadId !== threadId),
+      );
+      if (threadId === currThreadId) {
+        createNewChat();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  return (
+    <section className="bg-[#171717] text-[#b4b4b4] h-screen w-80 flex flex-col justify-between">
+      <button
+        className="flex justify-between items-center m-3 p-3  border border-teal-700 rounded-[10px] bg-transparent hover:bg-[rgba(180,180,180,0.05)] cursor-pointer"
+        onClick={createNewChat}
+      >
+        <img
+          src={logo}
+          alt="logo"
+          className="h-6 w-6 bg-white border rounded-[50%] object-cover "
+        />
+        <span className="text-[18px]">
+          <i className="fa-solid fa-pen-to-square"></i>
+        </span>
+      </button>
+
+      <ul className="m-3 p-3 h-screen history ">
+        {allThreads?.map((thread, idx) => [
+          <li
+            key={idx}
+            onClick={(e) => changeThread(thread.threadId)}
+            className={
+              thread.threadId === currThreadId
+                ? "bg-[rgba(180,180,180,0.05)] rounded-[10px]"
+                : ""
+            }
+          >
+            {thread.title}
+            <i
+              className="fa-solid fa-trash  absolute right-0 opacity-0"
+              onClick={(e) => {
+                e.stopPropagation();
+                deleteThread(thread.threadId);
+              }}
+            ></i>
+          </li>,
+        ])}
+      </ul>
+
+      <div className="p-3 m-3 text-[14px] text-center border-t-2 ">
+        <p>By Rahul Bhuniya &hearts;</p>
+      </div>
+    </section>
+  );
+}
+
+export default Sidebar;
