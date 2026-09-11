@@ -6,20 +6,6 @@ import protect from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// router.post("/test", async (req, res) => {
-//   try {
-//     const thread = new Thread({
-//       threadId: "abc",
-//       title: "Testing number two thread",
-//     });
-//     const response = await thread.save();
-//     res.send(response);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ error: "failed to save in DB" });
-//   }
-// });
-
 //get all threads
 router.get("/thread", protect, async (req, res) => {
   try {
