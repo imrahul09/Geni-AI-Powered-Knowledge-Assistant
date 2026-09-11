@@ -25,7 +25,7 @@ router.get("/thread", protect, async (req, res) => {
   try {
     //descending order of updateAt .. most recent data on top
     const threads = await Thread.find({ user: req.user._id }).sort({
-      updateAt: -1,
+      updatedAt: -1,
     });
     res.json(threads);
   } catch (err) {
@@ -92,7 +92,7 @@ router.post("/chat", protect, async (req, res) => {
 
     const assistanceReply = await getGeminiApiResponse(message);
     thread.messages.push({ role: "assistence", content: assistanceReply });
-    thread.updateAt = new Date();
+
     await thread.save();
     res.json({ reply: assistanceReply });
   } catch (err) {

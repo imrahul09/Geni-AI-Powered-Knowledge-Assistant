@@ -26,6 +26,7 @@ function Sidebar() {
         },
       });
       const res = await response.json();
+
       const filterData = res.map((thread) => ({
         threadId: thread.threadId,
         title: thread.title,
@@ -56,14 +57,20 @@ function Sidebar() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/thread/${newThreadId},`,
+        `http://localhost:5000/api/thread/${newThreadId}`,
         {
           headers: {
-            Authorization: `Bearer ${token},`,
+            Authorization: `Bearer ${token}`,
           },
         },
       );
       const res = await response.json();
+
+      if (!response.ok) {
+        console.log("Thread error:", res);
+        return;
+      }
+
       setPrevChats(res);
       setNewChat(false);
       setReply(null);

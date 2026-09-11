@@ -33,7 +33,9 @@ const Signup = () => {
     <div className="min-h-screen bg-[#212121] text-white flex items-center justify-center">
       <div className="w-full max-w-md bg-[#2f2f2f] p-8 rounded-2xl">
         <h1 className="text-3xl font-bold text-center mb-2">Create Account</h1>
-        <p>Create your account to start chatting</p>
+        <p className=" text-center mb-2">
+          Create your account to start chatting
+        </p>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block mb-2 text-sm">Name</label>

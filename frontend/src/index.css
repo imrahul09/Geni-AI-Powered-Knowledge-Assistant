@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 * {
-  color: #ececec;
+  /* color: #ececec; */
   font-family: Roboto, "Open sans", sans-serif;
 }
 

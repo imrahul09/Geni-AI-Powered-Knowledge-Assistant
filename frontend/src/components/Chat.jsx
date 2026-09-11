@@ -33,7 +33,9 @@ function Chat() {
   return (
     <>
       {newChat && (
-        <h1 className="font-bold text-3xl mt-20 ">Start a new chat !</h1>
+        <h1 className="font-bold text-3xl mt-20  text-[#ececec]">
+          Start a new chat !
+        </h1>
       )}
       <div className="w-full max-w-175 overflow-y-scroll scrollbar-none pb-10">
         {prevChats?.slice(0, -1).map((chat, idx) => (
