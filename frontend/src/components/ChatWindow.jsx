@@ -4,7 +4,7 @@ import { Bars } from "react-loader-spinner";
 import Chat from "./Chat";
 import { useAuth } from "../context/AuthContext.jsx";
 
-function ChatWindow() {
+function ChatWindow({ onOpenSidebar }) {
   const {
     prompt,
     setPrompt,
@@ -20,7 +20,7 @@ function ChatWindow() {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isListening, setIsListening] = useState(false);
-
+  
   const getReply = async () => {
     setLoading(true);
     setNewChat(false);
@@ -114,11 +114,21 @@ function ChatWindow() {
     recognition.start();
   };
   return (
-    <div className="bg-[#212121] h-screen w-full flex flex-col justify-between items-center text-center text-[#ececec]">
-      <div className="w-full flex justify-between items-center">
-        <span className="m-4 text-[#ececec] ">
-          Geni <i className="fa-solid fa-chevron-down"></i>{" "}
-        </span>
+    <div className="bg-[#212121] h-screen flex-1 min-w-0 flex flex-col justify-between items-center text-center text-[#ececec] py-4">
+      <div className="w-full flex justify-between items-center px-4 md:px-0">
+        <div className="flex items-center gap-2 ">
+          <button
+            onClick={onOpenSidebar}
+            className="md:hidden text-[#ececec] text-xl p-2"
+          >
+            <i className="fa-solid fa-bars"></i>
+          </button>
+
+          <span className="hidden md:flex justify-center items-center gap-1 text-[#ececec] ">
+            Geni <i className="fa-solid fa-chevron-down flex"></i>{" "}
+          </span>
+        </div>
+
         <div className="mx-6 mr-15" onClick={handleProfileClick}>
           <span className="bg-[#339cff] h-6 w-6 border rounded-[50%] flex items-center justify-center cursor-pointer  text-[#ececec]">
             <i className="fa-solid fa-user"></i>
@@ -128,10 +138,10 @@ function ChatWindow() {
       {isOpen && (
         <div className="absolute top-12 right-10 w-38 bg-[#323232] px-2 py-1 text-left rounded-md z-1000 text-[#ececec]">
           <div className="text-[14px] my-[0.3rem] px-[0.2rem] py-2 hover:bg-[rgba(180,180,180,0.1)] rounded-md">
-            <i class="fa-solid fa-cloud-arrow-up "></i>Upgrade Plan
+            <i className="fa-solid fa-cloud-arrow-up "></i>Upgrade Plan
           </div>
           <div className="text-[14px] my-[0.3rem] px-[0.2rem] py-2  hover:bg-[rgba(180,180,180,0.1)] rounded-md">
-            <i class="fa-solid fa-gear"></i>Setting
+            <i className="fa-solid fa-gear"></i>Setting
           </div>
           <div
             onClick={logout}
@@ -145,11 +155,11 @@ function ChatWindow() {
       <Chat />
       <Bars color="white" visible={loading} height="20" width="20" />
       <div className="w-full flex flex-col justify-center items-center ">
-        <div className="w-full relative max-w-175 flex justify-between items-center">
+        <div className="w-full relative max-w-175 px-4 flex justify-between items-center">
           <input
             type="text"
             placeholder="Ask anything"
-            className="w-full focus:outline-0 bg-[rgba(255,255,255,0.05)] p-5 text-1xl rounded-[14px]  text-[#ececec]"
+            className="w-full focus:outline-0 bg-[rgba(255,255,255,0.05)] p-4 md:p-5 text-base rounded-[14px]  text-[#ececec]"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={(e) => (e.key === "Enter" ? getReply() : "")}

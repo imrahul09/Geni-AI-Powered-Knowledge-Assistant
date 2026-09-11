@@ -18,6 +18,7 @@ function App() {
   const [prevChats, setPrevChats] = useState([]); // store all chats of our threads
   const [newChat, setNewChat] = useState(true);
   const [allThreads, setAllThreads] = useState([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const ProviderValues = {
     prompt,
@@ -45,9 +46,12 @@ function App() {
         element={
           <ProtectedRoute>
             <MyContext.Provider value={ProviderValues}>
-              <div className="flex bg-[#212121]">
-                <Sidebar />
-                <ChatWindow />
+              <div className="flex bg-[#212121] h-screen w-full overflow-hidden">
+                <Sidebar
+                  isOpen={sidebarOpen}
+                  onClose={() => setSidebarOpen(false)}
+                />
+                <ChatWindow onOpenSidebar={() => setSidebarOpen(true)} />
               </div>
             </MyContext.Provider>
           </ProtectedRoute>

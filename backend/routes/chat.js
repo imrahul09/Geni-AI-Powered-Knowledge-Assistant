@@ -13,6 +13,12 @@ router.get("/thread", protect, async (req, res) => {
     const threads = await Thread.find({ user: req.user._id }).sort({
       updatedAt: -1,
     });
+    console.log(
+      threads.map((thread) => ({
+        title: thread.title,
+        updatedAt: thread.updatedAt,
+      })),
+    );
     res.json(threads);
   } catch (err) {
     console.log(err);

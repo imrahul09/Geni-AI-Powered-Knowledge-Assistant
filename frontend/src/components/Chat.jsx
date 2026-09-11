@@ -37,7 +37,7 @@ function Chat() {
           Start a new chat !
         </h1>
       )}
-      <div className="w-full max-w-175 overflow-y-scroll scrollbar-none pb-10">
+      <div className="w-full max-w-175 px-4 overflow-y-auto scrollbar-none pb-10">
         {prevChats?.slice(0, -1).map((chat, idx) => (
           <div
             className={chat.role === "user" ? "userDiv" : "gptDiv"}
