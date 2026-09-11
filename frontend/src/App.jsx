@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import ChatWindow from "./components/ChatWindow";
-import Sidebar from "./components/sidebar";
+import Sidebar from "./components/Sidebar";
 import { MyContext } from "./context/MyContext";
 import { v1 as uuidv1 } from "uuid";
 
